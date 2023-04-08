@@ -66,7 +66,7 @@ page_selection_calculator = st.selectbox('Calculators',
 if page_selection_calculator == 'Central Capacity':
     st.write('Central Capacity')
 
-    # receiving the variables values
+    # Receiving the variables values
     P = st.number_input('Power Output')
     Pin = st.number_input('Power Input')
     G = st.number_input('Irradiance on Solar Panel')
