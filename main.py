@@ -1,5 +1,5 @@
-import streamlit as st
 import numpy as np
+import streamlit as st
 
 hidden_from_streamlit = '''
 
@@ -58,6 +58,19 @@ hidden_from_streamlit = '''
 
     '''
 
+# Gin and Tin Standard Value in case of a Non-Input
+Gin = 1000
+Tin = 25
+
+# Base st.text
+text_one = "If you don't have Pin, P, Efficiency, Irradiance or T values, go to 'Calculators'"
+
+text_two = "The Gin and Tin's values are available on manufacturer's guide"
+
+text_three = "If not, the standard values will be Gin = 1000W/m2 and Tin = 25°C"
+
+text_four = "NO VALUES CAN BE ZERO!"
+
 st.header('Solar Energy')
 
 # Quick pick to calculator, the main is 'Central Capacity', the others are support calculators
@@ -76,24 +89,22 @@ if page_selection_calculator == 'Central Capacity':
     T = st.number_input('Cell Temperature')
     Tin = st.number_input('Cell Temperature Standard Condition')
 
-    text_one = st.text("If you don't have Pin, P, Efficiency, Irradiance or T values, go to 'Calculators'")
-
-    text_two = st.text("The Gin and Tin's values are available on manufacturer's guide")
-
-    text_three = st.text("If not, the standard values will be Gin = 1000W/m2 and Tin = 25°C")
-
-    text_four = st.text("NO VALUES CAN BE ZERO!")
+    text_show_one = st.text(text_one)
+    text_show_two = st.text(text_two)
+    text_show_three = st.text(text_three)
+    text_show_four = st.text(text_four)
 
     # Checking if the values are functional
     if P and Pin and G and Gin and T and Tin:
-        # Applying the capacity formula
+        # Applying the capacity formula -> Capacity = (P / Pin) x (G / Gin) x (T / Tin)
         capacity = np.divide(P, Pin) * np.divide(G, Gin) * np.divide(T, Tin)
 
         if st.button('Calculate'):
             # Removing text_one, text_two and text_three after clicking the button
-            text_one.empty()
-            text_two.empty()
-            text_three.empty()
+            text_show_one.empty()
+            text_show_two.empty()
+            text_show_three.empty()
+            text_show_four.empty()
 
             # Showing the results
             st.write(f'The solar panel capacity is {capacity} W/m^2')
@@ -101,6 +112,30 @@ if page_selection_calculator == 'Central Capacity':
 
 if page_selection_calculator == 'Power Input (Pin)':
     st.write('Power Input')
+
+    # Receiving the variables values from user
+    P = st.number_input('Power Output')
+    G = st.number_input('Irradiance on Solar Panel')
+    Gin = st.number_input('Irradiance Standard Condition')
+    T = st.number_input('Cell Temperature')
+    Tin = st.number_input('Cell Temperature Standard Condition')
+    Efficiency = st.number_input('Efficiency of Solar Panel')
+
+    text_show_four = st.text(text_four)
+
+    # Checking if the values are functional
+    if P and G and Gin and T and Tin and Efficiency:
+        # Applying the Power Input formula -> Pin = P / (G / Gin) x (T / Tin) x Efficiency
+        Pin = np.multiply(np.divide(P, np.divide(G, Gin)), np.multiply(np.divide(T, Tin), Efficiency))
+
+        if st.button('Calculate'):
+            # Removing text_four after calculated
+            text_show_four.empty()
+
+            # Showing Results
+            st.write(f"The Power Input (Pin) is {Pin} W")
+
+
 
 if page_selection_calculator == 'Power Output (P)':
     st.write('Power Output')
