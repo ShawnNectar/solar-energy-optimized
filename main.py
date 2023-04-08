@@ -59,6 +59,46 @@ hidden_from_streamlit = '''
 
 st.header('Solar Energy')
 
-st.selectbox('Capacity Calculation',
-             ['Central Capacity', 'Power Input (Pin)', 'Power Output (P)', 'Efficiency', 'Irradiance (G)',
-              'Temperature (T)'])
+page_selection_calculator = st.selectbox('Calculators',
+                                         ['Central Capacity', 'Power Input (Pin)', 'Power Output (P)', 'Efficiency',
+                                          'Irradiance (G)', 'Temperature (T)'])
+
+if page_selection_calculator == 'Central Capacity':
+    st.write('Central Capacity')
+
+    # receiving the variables values
+    P = st.number_input('Power Output')
+    Pin = st.number_input('Power Input')
+    G = st.number_input('Irradiance on Solar Panel')
+    Gin = st.number_input('Irradiance Standard Condition')
+    T = st.number_input('Cell Temperature')
+    Tin = st.number_input('Cell Temperature Standard Condition')
+
+    st.text("If you don't have Pin, P, Efficiency, Irradiance or T values, go to 'Calculators'")
+
+    st.text("The Gin and Tin's values are available on manufacturer's guide")
+
+    st.text("If not, the standard values will be Gin = 1000W/m2 and Tin = 25°C")
+
+    # Checking if the values are functional
+    if P and Pin and G and Gin and T and Tin:
+        # Applying the capacity formula
+        capacity = (P / Pin) * (G / Gin) * (T / Tin)
+
+        st.write(f'The solar panel capacity is {capacity} W/m^2')
+        st.write(f"It means that each meter square of solar panel you will have {capacity} Watts")
+
+if page_selection_calculator == 'Power Input (Pin)':
+    st.write('Power Input')
+
+if page_selection_calculator == 'Power Output (P)':
+    st.write('Power Output')
+
+if page_selection_calculator == 'Efficiency':
+    st.write('Efficiency')
+
+if page_selection_calculator == 'Irradiance (G)':
+    st.write('Irradiance')
+
+if page_selection_calculator == 'Temperature (T)':
+    st.write('Temperature')
