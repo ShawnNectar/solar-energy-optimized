@@ -1,4 +1,5 @@
 import streamlit as st
+import numpy as np
 
 hidden_from_streamlit = '''
 
@@ -59,6 +60,7 @@ hidden_from_streamlit = '''
 
 st.header('Solar Energy')
 
+# Quick pick to calculator, the main is 'Central Capacity', the others are support calculators
 page_selection_calculator = st.selectbox('Calculators',
                                          ['Central Capacity', 'Power Input (Pin)', 'Power Output (P)', 'Efficiency',
                                           'Irradiance (G)', 'Temperature (T)'])
@@ -74,19 +76,26 @@ if page_selection_calculator == 'Central Capacity':
     T = st.number_input('Cell Temperature')
     Tin = st.number_input('Cell Temperature Standard Condition')
 
-    st.text("If you don't have Pin, P, Efficiency, Irradiance or T values, go to 'Calculators'")
+    text_one = st.text("If you don't have Pin, P, Efficiency, Irradiance or T values, go to 'Calculators'")
 
-    st.text("The Gin and Tin's values are available on manufacturer's guide")
+    text_two = st.text("The Gin and Tin's values are available on manufacturer's guide")
 
-    st.text("If not, the standard values will be Gin = 1000W/m2 and Tin = 25°C")
+    text_three = st.text("If not, the standard values will be Gin = 1000W/m2 and Tin = 25°C")
 
     # Checking if the values are functional
     if P and Pin and G and Gin and T and Tin:
         # Applying the capacity formula
-        capacity = (P / Pin) * (G / Gin) * (T / Tin)
+        capacity = np.divide(P, Pin) * np.divide(G, Gin) * np.divide(T, Tin)
 
-        st.write(f'The solar panel capacity is {capacity} W/m^2')
-        st.write(f"It means that each meter square of solar panel you will have {capacity} Watts")
+        if st.button('Calculate'):
+            # Removing text_one, text_two and text_three after clicking the button
+            text_one.empty()
+            text_two.empty()
+            text_three.empty()
+
+            # Showing the results
+            st.write(f'The solar panel capacity is {capacity} W/m^2')
+            st.write(f"It means that each meter square of solar panel you will have {capacity} Watts")
 
 if page_selection_calculator == 'Power Input (Pin)':
     st.write('Power Input')
