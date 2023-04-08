@@ -135,8 +135,6 @@ if page_selection_calculator == 'Power Input (Pin)':
             # Showing Results
             st.write(f"The Power Input (Pin) is {Pin} W")
 
-
-
 if page_selection_calculator == 'Power Output (P)':
     st.write('Power Output')
 
