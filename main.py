@@ -82,6 +82,8 @@ if page_selection_calculator == 'Central Capacity':
 
     text_three = st.text("If not, the standard values will be Gin = 1000W/m2 and Tin = 25°C")
 
+    text_four = st.text("NO VALUES CAN BE ZERO!")
+
     # Checking if the values are functional
     if P and Pin and G and Gin and T and Tin:
         # Applying the capacity formula
