@@ -76,181 +76,185 @@ text_one = (
 
 text_two = "The Gin and Tin's values are available on manufacturer's guide"
 
-text_three = "If not, the standard values will be Gin = 1000W/m2 and Tin = 25°C"
+text_three = "If not, the standard values will be Gin = 1000W/m^2 and Tin = 25°C"
 
 text_four = "NO VALUES CAN BE ZERO!"
 
 st.header("Solar Energy")
 
-# Quick pick to calculator, the main is 'Central Capacity', the others are support calculators
-page_selection_calculator = st.selectbox(
-    "Calculators",
-    [
-        "Central Capacity",
-        "Power Input (Pin)",
-        "Power Output (P)",
-        "Efficiency",
-        "Irradiance (G)",
-        "Temperature (T)",
-    ],
-)
+page_selection_main = st.selectbox("Options", ["Central Capacity", "MPPT"])
 
-if page_selection_calculator == "Central Capacity":
-    st.write("Central Capacity")
+if page_selection_main == "Central Capacity":
 
-    # Receiving the variables values from user
-    P = st.number_input("Power Output")
-    Pin = st.number_input("Power Input")
-    G = st.number_input("Irradiance on Solar Panel")
-    Gin = st.number_input("Irradiance Standard Condition")
-    T = st.number_input("Cell Temperature")
-    Tin = st.number_input("Cell Temperature Standard Condition")
+    # Quick pick to calculator, the main is 'Capacity', the others are support calculators
+    page_selection_calculator = st.selectbox(
+        "Calculators",
+        [
+            "Capacity",
+            "Power Input (Pin)",
+            "Power Output (P)",
+            "Efficiency",
+            "Irradiance (G)",
+            "Temperature (T)",
+        ],
+    )
 
-    text_show_one = st.text(text_one)
-    text_show_two = st.text(text_two)
-    text_show_three = st.text(text_three)
-    text_show_four = st.text(text_four)
+    if page_selection_calculator == "Capacity":
+        st.write("Central Capacity")
 
-    # Checking if the values are functional
-    if P and Pin and G and Gin and T and Tin:
-        # Applying the capacity formula -> Capacity = (P / Pin) x (G / Gin) x (T / Tin)
-        capacity = np.multiply(
-            np.divide(P, Pin), np.multiply(np.divide(G, Gin), np.divide(T, Tin))
-        )
+        # Receiving the variables values from user
+        P = st.number_input("Power Output")
+        Pin = st.number_input("Power Input")
+        G = st.number_input("Irradiance on Solar Panel")
+        Gin = st.number_input("Irradiance Standard Condition (Gin)")
+        T = st.number_input("Cell Temperature")
+        Tin = st.number_input("Cell Temperature Standard Condition (Tin)")
 
-        if st.button("Calculate"):
-            # Removing text_one, text_two and text_three after clicking the button
-            text_show_one.empty()
-            text_show_two.empty()
-            text_show_three.empty()
-            text_show_four.empty()
+        text_show_one = st.text(text_one)
+        text_show_two = st.text(text_two)
+        text_show_three = st.text(text_three)
+        text_show_four = st.text(text_four)
 
-            # Showing the results
-            st.write(f"The solar panel capacity is {capacity} W/m^2")
-            st.write(
-                f"It means that each meter square of solar panel you will have {capacity} Watts"
+        # Checking if the values are functional
+        if P and Pin and G and Gin and T and Tin:
+            # Applying the capacity formula -> Capacity = (P / Pin) x (G / Gin) x (T / Tin)
+            capacity = np.multiply(
+                np.divide(P, Pin), np.multiply(np.divide(G, Gin), np.divide(T, Tin))
             )
 
-if page_selection_calculator == "Power Input (Pin)":
-    st.write("Power Input")
+            if st.button("Calculate"):
+                # Removing text_one, text_two and text_three after clicking the button
+                text_show_one.empty()
+                text_show_two.empty()
+                text_show_three.empty()
+                text_show_four.empty()
 
-    # Receiving the variables values from user
-    P = st.number_input("Power Output")
-    G = st.number_input("Irradiance on Solar Panel")
-    Gin = st.number_input("Irradiance Standard Condition")
-    T = st.number_input("Cell Temperature")
-    Tin = st.number_input("Cell Temperature Standard Condition")
-    Efficiency = st.number_input("Efficiency of Solar Panel")
+                # Showing the results
+                st.write(f"The solar panel capacity is {capacity} W/m^2")
+                st.write(
+                    f"It means that each meter square of solar panel you will have {capacity} Watts"
+                )
 
-    text_show_two = st.text(text_two)
-    text_show_three = st.text(text_three)
-    text_show_four = st.text(text_four)
+    if page_selection_calculator == "Power Input (Pin)":
+        st.write("Power Input")
 
-    # Checking if the values are functional
-    if P and G and Gin and T and Tin and Efficiency:
-        # Applying the Power Input formula -> Pin = P / (G / Gin) x (T / Tin) x Efficiency
-        Pin = np.multiply(
-            np.divide(P, np.divide(G, Gin)), np.multiply(np.divide(T, Tin), Efficiency)
-        )
+        # Receiving the variables values from user
+        P = st.number_input("Power Output")
+        G = st.number_input("Irradiance on Solar Panel")
+        Gin = st.number_input("Irradiance Standard Condition (Gin)")
+        T = st.number_input("Cell Temperature")
+        Tin = st.number_input("Cell Temperature Standard Condition (Tin)")
+        Efficiency = st.number_input("Efficiency of Solar Panel")
 
-        if st.button("Calculate"):
-            # Removing text_four after calculated
-            text_show_two.empty()
-            text_show_three.empty()
-            text_show_four.empty()
+        text_show_two = st.text(text_two)
+        text_show_three = st.text(text_three)
+        text_show_four = st.text(text_four)
 
-            # Showing Results
-            st.write(f"The Power Input (Pin) is {Pin} W")
+        # Checking if the values are functional
+        if P and G and Gin and T and Tin and Efficiency:
+            # Applying the Power Input formula -> Pin = P / (G / Gin) x (T / Tin) x Efficiency
+            Pin = np.multiply(
+                np.divide(P, np.divide(G, Gin)), np.multiply(np.divide(T, Tin), Efficiency)
+            )
 
-if page_selection_calculator == "Power Output (P)":
-    st.write("Power Output")
+            if st.button("Calculate"):
+                # Removing text_four after calculated
+                text_show_two.empty()
+                text_show_three.empty()
+                text_show_four.empty()
 
-    # Receiving the variables values
-    Isc = st.number_input("Short-Circuit Current")
-    Voc = st.number_input("Open-Circuit Voltage")
-    FF = st.number_input("Fill Factor")
-    G = st.number_input("Irradiance on Solar Panel")
-    Gref = st.number_input("Reference Irradiance")
-    T = st.number_input("Cell Temperature")
-    Tref = st.number_input("Reference Temperature")
+                # Showing Results
+                st.write(f"The Power Input (Pin) is {Pin} W")
 
-    text_show_four = st.text(text_four)
+    if page_selection_calculator == "Power Output (P)":
+        st.write("Power Output")
 
-    if Isc and Voc and FF and Gref and Tref:
-        # Applying the Power Output formula -> P = Isc x Voc x FF x G/Gref x T/Tref
-        P = np.multiply.reduce([Isc, Voc, FF, np.divide(G, Gref), np.divide(T, Tref)])
+        # Receiving the variables values
+        Isc = st.number_input("Short-Circuit Current")
+        Voc = st.number_input("Open-Circuit Voltage")
+        FF = st.number_input("Fill Factor")
+        G = st.number_input("Irradiance on Solar Panel")
+        Gref = st.number_input("Reference Irradiance")
+        T = st.number_input("Cell Temperature")
+        Tref = st.number_input("Reference Temperature")
 
-        if st.button("Calculate"):
-            # Removing text_four after calculated
-            text_show_four.empty()
+        text_show_four = st.text(text_four)
 
-            st.write(f"The Power Output is {P} W")
+        if Isc and Voc and FF and Gref and Tref:
+            # Applying the Power Output formula -> P = Isc x Voc x FF x G/Gref x T/Tref
+            P = np.multiply.reduce([Isc, Voc, FF, np.divide(G, Gref), np.divide(T, Tref)])
 
-if page_selection_calculator == "Efficiency":
-    st.write("Efficiency")
+            if st.button("Calculate"):
+                # Removing text_four after calculated
+                text_show_four.empty()
 
-    # Receiving the variables values from user
-    P = st.number_input("Power Output")
-    G = st.number_input("Irradiance on Solar Panel")
-    A = st.number_input("Area of Solar Panel")
+                st.write(f"The Power Output is {P} W")
 
-    text_show_four = st.text(text_four)
+    if page_selection_calculator == "Efficiency":
+        st.write("Efficiency")
 
-    # Checking if the values are functional
-    if P and G and A:
-        # Applying the Efficiency formula ->Efficiency = (P / (G x A)) x 100
-        efficiency = np.multiply(np.divide(P, np.multiply(G, A)), 100)
+        # Receiving the variables values from user
+        P = st.number_input("Power Output")
+        G = st.number_input("Irradiance on Solar Panel")
+        A = st.number_input("Area of Solar Panel")
 
-        if st.button("Calculate"):
-            # Removing text_four
-            text_show_four.empty()
-            # Showing the results
-            st.write(f"Efficiency of Solar Panel is {efficiency}%")
+        text_show_four = st.text(text_four)
 
-if page_selection_calculator == "Irradiance (G)":
-    st.write("Irradiance")
+        # Checking if the values are functional
+        if P and G and A:
+            # Applying the Efficiency formula ->Efficiency = (P / (G x A)) x 100
+            efficiency = np.multiply(np.divide(P, np.multiply(G, A)), 100)
 
-    # Receiving the variables values from user
-    GO = st.number_input("Solar Constant")
-    theta = st.number_input("Angle of Incidence of Sunlight")
+            if st.button("Calculate"):
+                # Removing text_four
+                text_show_four.empty()
+                # Showing the results
+                st.write(f"Efficiency of Solar Panel is {efficiency}%")
 
-    text_show_four = st.text(text_four)
+    if page_selection_calculator == "Irradiance (G)":
+        st.write("Irradiance")
 
-    if GO and theta:
-        # Applying the Irradiance formula -> G = G0 x cos(θ)
-        # Maybe change GO value to constant and θ to auto-set
+        # Receiving the variables values from user
+        GO = st.number_input("Solar Constant")
+        theta = st.number_input("Angle of Incidence of Sunlight")
 
-        G = np.multiply(GO, np.cos(theta))
+        text_show_four = st.text(text_four)
 
-        if st.button("Calculate"):
-            # Removing text_four
-            text_show_four.empty()
+        if GO and theta:
+            # Applying the Irradiance formula -> G = G0 x cos(θ)
+            # Maybe change GO value to constant and θ to auto-set
 
-            # Showing the results
-            st.write(f"Irradiance on solar panel is {G} W/m^2")
+            G = np.multiply(GO, np.cos(theta))
 
-if page_selection_calculator == "Temperature (T)":
-    st.write("Temperature")
+            if st.button("Calculate"):
+                # Removing text_four
+                text_show_four.empty()
 
-    # Receiving the variables values from user
-    Ta = st.number_input("Ambient Temperature")
-    NOCT = st.number_input("Nominal Operating Cell Temperature")
-    G = st.number_input("Irradiance on Solar Panel")
-    Gref = st.number_input("Reference Irradiance")
-    H = st.number_input("Relative Humidity")
+                # Showing the results
+                st.write(f"Irradiance on solar panel is {G} W/m^2")
 
-    text_show_four = st.text(text_four)
+    if page_selection_calculator == "Temperature (T)":
+        st.write("Temperature")
 
-    # Checking if the values are functional
-    if Ta and NOCT and Gref and H:
-        # Applying the Temperature formula -> T = Ta + (NOCT - 20) x G/Gref x (1 - H/100) / 800
-        T = Ta + np.multiply(
-            np.divide(np.multiply(NOCT - 20, G), Gref), np.divide((100 - H), 800)
-        )
+        # Receiving the variables values from user
+        Ta = st.number_input("Ambient Temperature")
+        NOCT = st.number_input("Nominal Operating Cell Temperature")
+        G = st.number_input("Irradiance on Solar Panel")
+        Gref = st.number_input("Reference Irradiance")
+        H = st.number_input("Relative Humidity")
 
-        if st.button("Calculate"):
-            # Removing text_four after calculated
-            text_show_four.empty()
+        text_show_four = st.text(text_four)
 
-            # Showing Results
-            st.write(f"The Cell Temperature is {T}°C")
+        # Checking if the values are functional
+        if Ta and NOCT and Gref and H:
+            # Applying the Temperature formula -> T = Ta + (NOCT - 20) x G/Gref x (1 - H/100) / 800
+            T = Ta + np.multiply(
+                np.divide(np.multiply(NOCT - 20, G), Gref), np.divide((100 - H), 800)
+            )
+
+            if st.button("Calculate"):
+                # Removing text_four after calculated
+                text_show_four.empty()
+
+                # Showing Results
+                st.write(f"The Cell Temperature is {T}°C")
