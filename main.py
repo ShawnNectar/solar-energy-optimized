@@ -213,7 +213,7 @@ if page_selection_calculator == "Irradiance (G)":
     text_show_four = st.text(text_four)
 
     if GO and θ:
-        # Applying the formula -> G = G0 x cos(θ)
+        # Applying the Irradiance formula -> G = G0 x cos(θ)
         G = np.multiply(GO, np.cos(θ))
 
         if st.button("Calculate"):
