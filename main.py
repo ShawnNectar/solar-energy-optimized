@@ -38,7 +38,9 @@ hidden_from_streamlit = """
             Isc = A             Short-Circuit Current
             Voc = V             Open-Circuit Voltage
             FF = dimensionless  Fill Factor
+            G = W/m^2           Irradiance on Solar Panel
             Gref = W/m^2        Reference Irradiance
+            T = °C              Cell Temperature
             Tref = °C           Reference Temperature
 
     Irradiance on solar panel:
@@ -153,6 +155,28 @@ if page_selection_calculator == "Power Input (Pin)":
 
 if page_selection_calculator == "Power Output (P)":
     st.write("Power Output")
+
+    # Receiving the variables values
+    Isc = st.number_input("Short-Circuit Current")
+    Voc = st.number_input("Open-Circuit Voltage")
+    FF = st.number_input("Fill Factor")
+    G = st.number_input("Irradiance on Solar Panel")
+    Gref = st.number_input("Reference Irradiance")
+    T = st.number_input("Cell Temperature")
+    Tref = st.number_input("Reference Temperature")
+
+    text_show_four = st.text(text_four)
+
+    if Isc and Voc and FF and Gref and Tref:
+        # Applying the Power Output formula -> P2 = Isc x Voc x FF x G/Gref x T/Tref
+        P = np.multiply.reduce([Isc, Voc, FF, np.divide(G, Gref), np.divide(T, Tref)])
+
+        if st.button("Calculate"):
+            # Removing text_four after calculated
+            text_show_four.empty()
+
+            st.write(f"The Power Output is {P}")
+
 
 if page_selection_calculator == "Efficiency":
     st.write("Efficiency")
