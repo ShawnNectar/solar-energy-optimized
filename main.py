@@ -218,6 +218,8 @@ if page_selection_calculator == "Irradiance (G)":
 
     if GO and θ:
         # Applying the Irradiance formula -> G = G0 x cos(θ)
+        # Maybe change GO value to constant and θ to auto-set
+
         G = np.multiply(GO, np.cos(θ))
 
         if st.button("Calculate"):
