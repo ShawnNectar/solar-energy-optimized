@@ -173,7 +173,7 @@ if page_selection_calculator == "Power Output (P)":
     text_show_four = st.text(text_four)
 
     if Isc and Voc and FF and Gref and Tref:
-        # Applying the Power Output formula -> P2 = Isc x Voc x FF x G/Gref x T/Tref
+        # Applying the Power Output formula -> P = Isc x Voc x FF x G/Gref x T/Tref
         P = np.multiply.reduce([Isc, Voc, FF, np.divide(G, Gref), np.divide(T, Tref)])
 
         if st.button("Calculate"):
