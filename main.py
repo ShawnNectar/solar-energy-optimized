@@ -54,6 +54,7 @@ hidden_from_streamlit = """
             Unity: °C
             Ta = °C             Ambient Temperature
             NOCT = °C           Nominal Operating Cell Temperature
+            G = W/m^2           Irradiance on Solar Panel
             Gref = W/m^2        Reference Irradiance
             H = %               Relative humidity
 
@@ -175,14 +176,68 @@ if page_selection_calculator == "Power Output (P)":
             # Removing text_four after calculated
             text_show_four.empty()
 
-            st.write(f"The Power Output is {P}")
-
+            st.write(f"The Power Output is {P} W")
 
 if page_selection_calculator == "Efficiency":
     st.write("Efficiency")
+    #    Efficiency = (P / (G x A)) x 100%
+    # Receiving the variables values from user
+    P = st.number_input("Power Output")
+    G = st.number_input("Irradiance on Solar Panel")
+    A = st.number_input("Area of Solar Panel")
+
+    text_show_four = st.text(text_four)
+
+    # Checking if the values are functional
+    if P and G and A:
+        efficiency = np.multiply(np.divide(P, np.multiply(G, A)), 100)
+
+        if st.button("Calculate"):
+            # Removing text_four
+            text_show_four.empty()
+            # Showing the results
+            st.write(f"Efficiency of Solar Panel is {efficiency}%")
 
 if page_selection_calculator == "Irradiance (G)":
     st.write("Irradiance")
 
+    # Receiving the variables values from user
+    GO = st.number_input("Solar Constant")
+    θ = st.number_input("Angle of Incidence of Sunlight")
+
+    text_show_four = st.text(text_four)
+
+    if GO and θ:
+        # Applying the formula -> G = G0 x cos(θ)
+        G = np.multiply(GO, np.cos(θ))
+
+        if st.button("Calculate"):
+            # Removing text_four
+            text_show_four.empty()
+
+            # Showing the results
+            st.write(f"Irradiance on solar panel is {G} W/m^2")
+
 if page_selection_calculator == "Temperature (T)":
     st.write("Temperature")
+
+    # Receiving the variables values from user
+    Ta = st.number_input("Ambient Temperature")
+    NOCT = st.number_input("Nominal Operating Cell Temperature")
+    G = st.number_input("Irradiance on Solar Panel")
+    Gref = st.number_input("Reference Irradiance")
+    H = st.number_input("Relative Humidity")
+
+    text_show_four = st.text(text_four)
+
+    # Checking if the values are functional
+    if Ta and NOCT and Gref and H:
+        # Applying the formula -> T = Ta + (NOCT - 20) x G/Gref x (1 - H/100) / 800
+        T = Ta + np.multiply(np.divide(np.multiply(NOCT - 20, G), Gref), np.divide((100 - H), 800))
+
+        if st.button("Calculate"):
+            # Removing text_four after calculated
+            text_show_four.empty()
+
+            # Showing Results
+            st.write(f"The Cell Temperature is {T}°C")
