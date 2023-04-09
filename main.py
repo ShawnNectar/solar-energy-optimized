@@ -184,7 +184,7 @@ if page_selection_calculator == "Power Output (P)":
 
 if page_selection_calculator == "Efficiency":
     st.write("Efficiency")
-    #    Efficiency = (P / (G x A)) x 100%
+    
     # Receiving the variables values from user
     P = st.number_input("Power Output")
     G = st.number_input("Irradiance on Solar Panel")
@@ -194,6 +194,7 @@ if page_selection_calculator == "Efficiency":
 
     # Checking if the values are functional
     if P and G and A:
+            # Applying the Efficiency formula ->Efficiency = (P / (G x A)) x 100
         efficiency = np.multiply(np.divide(P, np.multiply(G, A)), 100)
 
         if st.button("Calculate"):
