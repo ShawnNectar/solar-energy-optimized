@@ -237,7 +237,7 @@ if page_selection_calculator == "Temperature (T)":
 
     # Checking if the values are functional
     if Ta and NOCT and Gref and H:
-        # Applying the formula -> T = Ta + (NOCT - 20) x G/Gref x (1 - H/100) / 800
+        # Applying the Temperature formula -> T = Ta + (NOCT - 20) x G/Gref x (1 - H/100) / 800
         T = Ta + np.multiply(
             np.divide(np.multiply(NOCT - 20, G), Gref), np.divide((100 - H), 800)
         )
