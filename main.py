@@ -212,15 +212,15 @@ if page_selection_calculator == "Irradiance (G)":
 
     # Receiving the variables values from user
     GO = st.number_input("Solar Constant")
-    θ = st.number_input("Angle of Incidence of Sunlight")
+    theta = st.number_input("Angle of Incidence of Sunlight")
 
     text_show_four = st.text(text_four)
 
-    if GO and θ:
+    if GO and theta:
         # Applying the Irradiance formula -> G = G0 x cos(θ)
         # Maybe change GO value to constant and θ to auto-set
 
-        G = np.multiply(GO, np.cos(θ))
+        G = np.multiply(GO, np.cos(theta))
 
         if st.button("Calculate"):
             # Removing text_four
