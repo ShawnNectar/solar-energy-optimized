@@ -70,9 +70,8 @@ Gin = 1000
 Tin = 25
 
 # Base st.text
-text_one = (
+text_one =
     "If you don't have Pin, P, Efficiency, Irradiance or T values, go to 'Calculators'"
-)
 
 text_two = "The Gin and Tin's values are available on manufacturer's guide"
 
