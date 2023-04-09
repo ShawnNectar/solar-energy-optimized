@@ -70,8 +70,9 @@ Gin = 1000
 Tin = 25
 
 # Base st.text
-text_one =
+text_one = (
     "If you don't have Pin, P, Efficiency, Irradiance or T values, go to 'Calculators'"
+)
 
 text_two = "The Gin and Tin's values are available on manufacturer's guide"
 
@@ -187,7 +188,7 @@ if page_selection_calculator == "Power Output (P)":
 
 if page_selection_calculator == "Efficiency":
     st.write("Efficiency")
-    
+
     # Receiving the variables values from user
     P = st.number_input("Power Output")
     G = st.number_input("Irradiance on Solar Panel")
@@ -197,7 +198,7 @@ if page_selection_calculator == "Efficiency":
 
     # Checking if the values are functional
     if P and G and A:
-            # Applying the Efficiency formula ->Efficiency = (P / (G x A)) x 100
+        # Applying the Efficiency formula ->Efficiency = (P / (G x A)) x 100
         efficiency = np.multiply(np.divide(P, np.multiply(G, A)), 100)
 
         if st.button("Calculate"):
