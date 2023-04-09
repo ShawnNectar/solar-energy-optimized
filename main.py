@@ -15,6 +15,7 @@ hidden_from_streamlit = """
         Tin = °C                Cell Temperature Standard Condition
         Efficiency = %          Efficiency of Solar Panel
 
+
     Power Input:
         Pin = P / (G / Gin) x (T / Tin) x Efficiency
             Unity: W
@@ -25,12 +26,6 @@ hidden_from_streamlit = """
             Tin = °C            Cell Temperature Standard Condition
             Efficiency = %      Efficiency of Solar Panel
 
-
-    Efficiency = (P / (G x A)) x 100%
-        Unity: %
-        P = W                   Power Output
-        G = W/m^2               Irradiance on Solar Panel
-        A = m^2                 Area of Solar Panel
 
     Power Output:
         P = Isc x Voc x FF x G/Gref x T/Tref
@@ -43,11 +38,20 @@ hidden_from_streamlit = """
             T = °C              Cell Temperature
             Tref = °C           Reference Temperature
 
+
+    Efficiency = (P / (G x A)) x 100%
+        Unity: %
+        P = W                   Power Output
+        G = W/m^2               Irradiance on Solar Panel
+        A = m^2                 Area of Solar Panel
+
+
     Irradiance on solar panel:
         G = G0 x cos(θ)
             Unity: W/m^2
             G0 = W/m^2          Solar Constant
             θ = degrees         Angle of Incidence of Sunlight on The Solar Panel
+
 
     Temperature:
         T = Ta + (NOCT - 20) x G/Gref x (1 - H/100) / 800
