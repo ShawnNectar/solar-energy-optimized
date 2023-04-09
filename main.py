@@ -106,17 +106,23 @@ if page_selection_main == "Central Capacity":
         P = st.number_input("Power Output")
         Pin = st.number_input("Power Input")
         G = st.number_input("Irradiance on Solar Panel")
-        Gin = st.number_input("Irradiance Standard Condition (Gin)")
+        Gin = st.number_input("Irradiance Standard Condition (Gin)", value=Gin)
         T = st.number_input("Cell Temperature")
-        Tin = st.number_input("Cell Temperature Standard Condition (Tin)")
+        Tin = st.number_input("Cell Temperature Standard Condition (Tin)", value=Tin)
 
         text_show_one = st.text(text_one)
         text_show_two = st.text(text_two)
         text_show_three = st.text(text_three)
         text_show_four = st.text(text_four)
 
+        if Gin == 0 or Gin == None:
+            Gin = 1000
+            gin_standard_warn = st.text("The Standard Value for Gin is being used (1000)")
+        if Tin == 0 or Tin == None:
+            Tin = 25
+            tin_standard_warn = st.text("The Standard Value for tin is being used (25)")
         # Checking if the values are functional
-        if P and Pin and G and Gin and T and Tin:
+        if P and Pin and G and T:
             # Applying the capacity formula -> Capacity = (P / Pin) x (G / Gin) x (T / Tin)
             capacity = np.multiply(
                 np.divide(P, Pin), np.multiply(np.divide(G, Gin), np.divide(T, Tin))
@@ -141,17 +147,26 @@ if page_selection_main == "Central Capacity":
         # Receiving the variables values from user
         P = st.number_input("Power Output")
         G = st.number_input("Irradiance on Solar Panel")
-        Gin = st.number_input("Irradiance Standard Condition (Gin)")
+        # Giving a base-value to Gin
+        Gin = st.number_input("Irradiance Standard Condition (Gin)", value=Gin)
         T = st.number_input("Cell Temperature")
-        Tin = st.number_input("Cell Temperature Standard Condition (Tin)")
+        # Giving a base-value to Tin
+        Tin = st.number_input("Cell Temperature Standard Condition (Tin)", value=Tin)
         Efficiency = st.number_input("Efficiency of Solar Panel")
 
         text_show_two = st.text(text_two)
         text_show_three = st.text(text_three)
         text_show_four = st.text(text_four)
 
+        if Gin == 0 or Gin == None:
+            Gin = 1000
+            gin_standard_warn = st.text("The Standard Value for Gin is being used (1000)")
+        if Tin == 0 or Tin == None:
+            Tin = 25
+            tin_standard_warn = st.text("The Standard Value for tin is being used (25)")
+
         # Checking if the values are functional
-        if P and G and Gin and T and Tin and Efficiency:
+        if P and G and T and Efficiency:
             # Applying the Power Input formula -> Pin = P / (G / Gin) x (T / Tin) x Efficiency
             Pin = np.multiply(
                 np.divide(P, np.divide(G, Gin)), np.multiply(np.divide(T, Tin), Efficiency)
@@ -164,7 +179,7 @@ if page_selection_main == "Central Capacity":
                 text_show_four.empty()
 
                 # Showing Results
-                st.write(f"The Power Input (Pin) is {Pin} W")
+                st.write(f"The Power Input (Pin) is {Pin}")
 
     if page_selection_calculator == "Power Output (P)":
         st.write("Power Output")
