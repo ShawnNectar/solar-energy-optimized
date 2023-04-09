@@ -142,6 +142,8 @@ if page_selection_calculator == "Power Input (Pin)":
     Tin = st.number_input("Cell Temperature Standard Condition")
     Efficiency = st.number_input("Efficiency of Solar Panel")
 
+    text_show_two = st.text(text_two)
+    text_show_three = st.text(text_three)
     text_show_four = st.text(text_four)
 
     # Checking if the values are functional
@@ -153,6 +155,8 @@ if page_selection_calculator == "Power Input (Pin)":
 
         if st.button("Calculate"):
             # Removing text_four after calculated
+            text_show_two.empty()
+            text_show_three.empty()
             text_show_four.empty()
 
             # Showing Results
